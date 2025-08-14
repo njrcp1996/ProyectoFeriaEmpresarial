@@ -29,7 +29,7 @@ public class Empresa {
     public void setStandNumero(Integer standNumero) { this.standNumero = standNumero; }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // funcion para evaluar si el id es repetido
         if (this == o) return true;
         if (!(o instanceof Empresa)) return false;
         Empresa empresa = (Empresa) o;
@@ -37,7 +37,7 @@ public class Empresa {
     }
 
     @Override
-    public int hashCode() { return Objects.hash(id); }
+    public int hashCode() { return Objects.hash(id); } // Genera codigos hash para hacer que los id sean unicos
 
     @Override
     public String toString() {
@@ -47,6 +47,6 @@ public class Empresa {
                 ", sector='" + sector + '\'' +
                 ", email='" + emailContacto + '\'' +
                 ", standNumero=" + (standNumero == null ? "(sin asignar)" : standNumero) +
-                '}';
+                '}';// validacion para indicar si standNumero es nulo o no
     }
 }

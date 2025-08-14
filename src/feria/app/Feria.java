@@ -50,10 +50,10 @@ public class Feria {
     }
 
     public Empresa buscarEmpresa(int id) {
-        return empresas.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+        return empresas.stream().filter(x -> x.getId() == id).findFirst().orElse(null); // Se recorre la lista de empresas y se va a evaluar cada id guardado con el de la entrada y con findFist tomo el elemento de la lista encontrado
     }
 
-    public List<Empresa> listarEmpresas() { return new ArrayList<>(empresas); }
+    public List<Empresa> listarEmpresas() { return new ArrayList<>(empresas); } // Retorna la informacion de lo que exista actualmente
 
     // ================= STANDS =================
     public boolean crearStand(int numero, String ubicacion, String tamano) {
@@ -155,20 +155,20 @@ public class Feria {
     }
 
     public List<Comentario> comentariosPorStand(int standNumero) {
-        return comentarios.stream().filter(c -> c.getStandNumero() == standNumero).collect(Collectors.toList());
+        return comentarios.stream().filter(c -> c.getStandNumero() == standNumero).collect(Collectors.toList()); // retorna el listado de comentarios
     }
 
     public List<Comentario> comentariosPorEmpresa(int empresaId) {
         Empresa e = buscarEmpresa(empresaId);
-        if (e == null || e.getStandNumero() == null) return Collections.emptyList();
+        if (e == null || e.getStandNumero() == null) return Collections.emptyList(); // Retorna una lista vacia 
         return comentariosPorStand(e.getStandNumero());
     }
 
     // ================= REPORTES =================
     public List<String> reporteEmpresasYStands() {
         return empresas.stream()
-                .sorted(Comparator.comparing(Empresa::getId))
-                .map(e -> {
+                .sorted(Comparator.comparing(Empresa::getId)) // organiza verticalmente la informacion
+                .map(e -> { // Se utiliza map para manipular la informacion de la lista acorde al tipo de dato que requiero guardar
                     String standStr = (e.getStandNumero() == null) ? "(sin stand)" : "Stand " + e.getStandNumero();
                     return String.format("[%d] %s | Sector: %s | %s", e.getId(), e.getNombre(), e.getSector(), standStr);
                 })
@@ -177,12 +177,12 @@ public class Feria {
 
     public List<String> reporteVisitantesYVisitas() {
         // para cada visitante, listar los stands que comentó/visitó
-        Map<Integer, List<Comentario>> porVisitante = comentarios.stream().collect(Collectors.groupingBy(Comentario::getVisitanteId));
+        Map<Integer, List<Comentario>> porVisitante = comentarios.stream().collect(Collectors.groupingBy(Comentario::getVisitanteId)); // A
         return visitantes.stream()
                 .sorted(Comparator.comparing(Visitante::getId))
                 .map(v -> {
-                    List<Comentario> cs = porVisitante.getOrDefault(v.getId(), Collections.emptyList());
-                    String visited = cs.stream().map(c -> String.valueOf(c.getStandNumero())).distinct().collect(Collectors.joining(", "));
+                    List<Comentario> cs = porVisitante.getOrDefault(v.getId(), Collections.emptyList()); // getOrDefault me trae los comentarios o vacio
+                    String visited = cs.stream().map(c -> String.valueOf(c.getStandNumero())).distinct().collect(Collectors.joining(", ")); // Separo por comas las visitas de los stans y guardo esa informacion en la variable visited
                     if (visited.isEmpty()) visited = "(sin visitas)";
                     return String.format("[%d] %s | Visitas a stands: %s", v.getId(), v.getNombre(), visited);
                 })
@@ -203,3 +203,5 @@ public class Feria {
                 .collect(Collectors.toList());
     }
 }
+
+

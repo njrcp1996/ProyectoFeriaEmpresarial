@@ -289,7 +289,7 @@ public class FeriaEmpresarialMain {
         int empId = leerEntero();
         List<Comentario> lista = service.comentariosPorEmpresa(empId);
         if (lista.isEmpty()) { System.out.println("Sin comentarios"); return; }
-        lista.forEach(System.out::println);
+        lista.forEach(System.out::println); // Imprimir linea a linea los comentarios
     }
 
     private static void verComentariosPorStand() {
